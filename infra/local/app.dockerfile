@@ -9,5 +9,3 @@ COPY ./app /app/
 RUN uv sync --frozen
 
 ENV PATH="/app/.venv/bin:$PATH"
-
-CMD ["fastapi", "run", "main.py"]
