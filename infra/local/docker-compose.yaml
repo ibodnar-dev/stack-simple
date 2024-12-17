@@ -2,10 +2,20 @@ services:
 
   app:
     image: app-dev
+    build:
+      context: ../../
+      dockerfile: ./infra/local/app.dockerfile
     networks:
       - app
     ports:
       - "8000:8000"
+    develop:
+      watch:
+        - action: sync
+          path: ../../app
+          target: /app
+          ignore:
+            - .venv/
     command: ["fastapi", "dev", "main.py", "--host", "0.0.0.0"]
 
 networks:
