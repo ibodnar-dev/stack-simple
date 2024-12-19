@@ -5,20 +5,20 @@ services:
       - db
     image: app-dev
     build:
-      context: ../../
-      dockerfile: ./infra/local/app.dockerfile
+      context: .
+      dockerfile: app.dockerfile
     networks:
       - app
     ports:
       - "8000:8000"
+    env_file:
+      - .env
     develop:
       watch:
         - action: sync
-          path: ../../app
-          target: /app
-          ignore:
-            - .venv/
-    command: ["fastapi", "dev", "main.py", "--host", "0.0.0.0"]
+          path: ./app
+          target: /stack-simple/app
+    command: ["fastapi", "dev", "app/main.py", "--host", "0.0.0.0"]
 
   db:
     image: postgres:16
@@ -28,6 +28,8 @@ services:
       - "5432:5432"
     volumes:
       - ./pg-data:/var/lib/postgresql/data/pgdata
+    env_file:
+      - .env
     environment:
       - PGDATA=/var/lib/postgresql/data/pgdata
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD?Variable not set}

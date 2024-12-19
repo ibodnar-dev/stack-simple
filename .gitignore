@@ -160,4 +160,4 @@ cython_debug/
 .idea/
 
 # Local db data directory
-infra/local/pg-data
+pg-data/
