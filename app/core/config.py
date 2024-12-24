@@ -5,7 +5,7 @@ from sqlalchemy import URL
 
 
 class Settings(BaseSettings):
-    postgres_server: str
+    postgres_host: str
     postgres_port: int
     postgres_db: str
     postgres_user: str
@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     @cached_property
     def postgres_url(self):
         return URL.create(
-            "postgresql+psycopg2",
+            "postgresql+psycopg",
             username=self.postgres_user,
             password=self.postgres_password,
             host=self.postgres_host,
