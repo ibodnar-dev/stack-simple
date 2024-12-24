@@ -1,8 +1,7 @@
-from pydantic import BaseModel
+from dataclasses import dataclass
 
 
-class User(BaseModel):
+@dataclass
+class User:
     username: str
     email: str | None = None
-    full_name: str | None = None
-    disabled: bool | None = None
