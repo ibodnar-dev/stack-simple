@@ -161,3 +161,10 @@ cython_debug/
 
 # Local db data directory
 pg-data/
+
+# Terraform directories
+.terraform/
+
+# State files
+terraform.tfstate
+terraform.tfstate.backup
