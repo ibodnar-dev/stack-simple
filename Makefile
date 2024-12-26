@@ -13,7 +13,7 @@ doc-login:
 	aws ecr get-login-password | docker login --username AWS --password-stdin $(ECR_URI)
 
 build:
-	export DOCKER_BUILDKIT=1 && docker build --no-cache -f $(PROD_DOCKERFILE) -t $(ECR_URI):$(TAG) .
+	docker build --no-cache -f $(PROD_DOCKERFILE) -t $(ECR_URI):$(TAG) .
 
 push:
 	docker push $(ECR_URI):$(TAG)
