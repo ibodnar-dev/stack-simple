@@ -1,0 +1,3 @@
+app/tests/
+app/**/__pycache__/
+app/**/*.pyc

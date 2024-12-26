@@ -6,7 +6,7 @@ services:
     image: app-dev
     build:
       context: .
-      dockerfile: app.dockerfile
+      dockerfile: infra/local/app.local.dockerfile
     networks:
       - app
     ports:
