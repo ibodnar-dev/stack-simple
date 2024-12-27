@@ -168,3 +168,8 @@ pg-data/
 # State files
 terraform.tfstate
 terraform.tfstate.backup
+*.tfvars
+.terraform.tfstate.lock.info
+
+#cb
+.codebuddy/
