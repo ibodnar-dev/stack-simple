@@ -10,6 +10,11 @@ COPY ../../pyproject.toml ../../uv.lock /stack-simple/
 
 RUN uv sync --frozen
 ENV PATH="/stack-simple/.venv/bin:$PATH"
+ENV POSTGRES_HOST="stack-db.c30iuu6soju5.us-east-1.rds.amazonaws.com"
+ENV POSTGRES_PORT=5432
+ENV POSTGRES_DB="app"
+ENV POSTGRES_USER="app"
+ENV POSTGRES_PASSWORD="app"
 
 EXPOSE 8000
 

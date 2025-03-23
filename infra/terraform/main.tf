@@ -126,6 +126,14 @@ resource "aws_security_group" "postgres" {
   }
 }
 
+# Add a parameter group for PostgreSQL to accept connections
+resource "aws_db_parameter_group" "postgres" {
+  name   = "postgres16-params"
+  family = "postgres16"
+
+  # This doesn't directly modify pg_hba.conf but we need the parameter group for proper setup
+}
+
 # RDS Instance
 
 module "db" {
@@ -152,13 +160,15 @@ module "db" {
   db_subnet_group_name   = aws_db_subnet_group.postgres.name
   vpc_security_group_ids = [aws_security_group.postgres.id]
 
+  parameter_group_name   = aws_db_parameter_group.postgres.name
+
   maintenance_window              = "Mon:00:00-Mon:03:00"
   backup_window                   = "03:00-06:00"
   enabled_cloudwatch_logs_exports = ["postgresql", "upgrade"]
 
   skip_final_snapshot = true
 
-  subnet_ids = [aws_subnet.private.id]
+  subnet_ids = [aws_subnet.private.id, aws_subnet.private_1.id]
 }
 
 resource "aws_db_subnet_group" "postgres" {
@@ -169,7 +179,7 @@ resource "aws_db_subnet_group" "postgres" {
 # App Runner
 resource "aws_apprunner_vpc_connector" "connector" {
   vpc_connector_name = "app-connector"
-  subnets           = [aws_subnet.public.id]
+  subnets           = [aws_subnet.private.id, aws_subnet.private_1.id]
   security_groups   = [aws_security_group.apprunner.id]
 }
 
